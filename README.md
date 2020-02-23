@@ -45,4 +45,6 @@ result = parse.urlparse(url)
 print(result.scheme/netloc/path/params/query/fragment)
 ```
 **urlsplit和上面基本一样，只是返回没有params**  
+- **request.Request类**  
+可以添加请求头
 
