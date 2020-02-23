@@ -35,7 +35,8 @@ SELECT table_name FROM sqlite_master WHERE type = 'table';
 **算术运算符：** +，-，* ，/，%  
 **比较运算符：** == / =（皆为比较相等）,!= / <>,>,<,>=,<=,!<,!>  
 **逻辑运算符：**  
-AND,BETWEEN,EXISTS,IN(与一系列指定表的值)，NOT IN(与一系列指定表的值),  
+AND,BETWEEN,IN(与一系列指定表的值)，NOT IN(与一系列指定表的值),  
+**EXISTS**:与in的区别，in是在子查询中的列表判断存在与否，exists是loop循环每次判断（）中的条件是否能查询出数值，可以则显示。
 LIKE:某值与通配符进行比较  
 GLOB:与LIKE相似，但是大小写敏感  
 NOT,OR,IS NULL,IS(与=相似),IS NOT(!=),  
