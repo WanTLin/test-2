@@ -22,4 +22,27 @@ print(res.read())
 from urllib import request
 request.urlretrieve('http://www.baidu.com/','baidu.html')
 ## 第二个参数是文件下载到那个路径
+```  
+- **urlencode函数**  
+编码函数  
+```  
+from urllib import parse
+params = {'name':'张三','age':10,'great':'hello,world'}
+result=parse.urlencode(params)
+print(result)
+```  
+- **parse_qs函数**  
+解码函数  
+```  
+result2 = parse.parse_qs(result)
+```  
+- **urlparse 和 urlsplit**  
+有时候拿到一个url，可将url中各个部分进行分割  
 ```
+from urllib import parse
+url = 'htttp://www.baidu.com/s?wd=hfihhfis'
+result = parse.urlparse(url)
+print(result.scheme/netloc/path/params/query/fragment)
+```
+**urlsplit和上面基本一样，只是返回没有params**  
+
