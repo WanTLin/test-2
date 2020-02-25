@@ -45,6 +45,7 @@ result = parse.urlparse(url)
 print(result.scheme/netloc/path/params/query/fragment)
 ```
 **urlsplit和上面基本一样，只是返回没有params**  
+   
 -------  
 - **request.Request类**  
 可以添加请求头  
@@ -59,13 +60,13 @@ print(resp.read())
 ```
 ------  
 - **ProxyHandler处理器（代理设置）  
-太多次访问一个网址，可能会被禁止这个IP的访问，就是一个防反爬虫
+太多次访问一个网址，可能会被禁止这个IP的访问，就是一个防反爬虫  
 1.代理的原理：在请求目的服务器之前，先请求代理服务器，然后让代理服务器去请求目的网站，代理服务器拿到目的网站的数据，再转发给我们的代码  
 2.http://httpbin.org/io 可以方便我们查看http请求的一些参数  
 3.在代码中使用代理    
 ```python  
 from urllib import request
-handler = request.ProxyHandler({"http":"218.66.161.88(ip地址):31769(端口)})
+handler = request.ProxyHandler({"http":"218.66.161.88(ip地址):31769(端口)"})
 opener = request.build_opener(handler)
 req = request.Request("http://httpbin.org/io")
 resq = opener.open(req)
@@ -101,6 +102,7 @@ with open('wangit.html','w',encoding='utf-8') as fp:
 ```
 -------  
 - **http.cookiejar模块**  
+自动登录  
 ```python
 from urllib import request
 from urllib import parse
@@ -141,4 +143,23 @@ if __name__ == '__main__':
     opener = get_opener()
     login(opener)
     visit(opener)
-```
+```  
+--------   
+- **保存cookie到本地**  
+```python
+from urllib import request
+from http.cookiejar import MozillaCookieJar
+
+cookiejar = MozillaCookieJar('cookie.txt')
+cookiejar.load(ignore_discard=True) #打印cookie信息
+handler =  request.HTTPCookieProcessor(cookiejar)
+opener = request.build_opener(handler)
+resp=opener.open('http://httpbin.org/cookies/set?course=abc')
+for cookie in cookiejar:
+    print(cookie)  #打印cookie信息
+cookiejar.save(ignore_discard=True)#把cookie信息保存在本地文件
+#ignore_discard把即将过期的cookie信息也可以存储下来
+```  
+
+
+
