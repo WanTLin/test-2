@@ -1,4 +1,4 @@
-- 发送GET请求:  
+- **发送GET请求:**  
 1.发送一个简单的get请求:  
 ```python
 response = requests.get("http://baidu.com")
@@ -40,7 +40,7 @@ response = requests.post(url,data=data,headers=headers)
 print(response.json())#可以将数据转换为json形式
 print(response.text)
 ```  
-- 使用代理proxies  
+- **使用代理proxies**  
 ```python 
 import requests
 url = "http://httpbin.org/ip"
@@ -49,4 +49,33 @@ proxy = {
 }
 response = requests.post(url,proxies=proxy)
 print(response.text)
+```  
+- **requests处理cookie信息**  
+1. 简单获取cookies:  
+```python
+print(response.cookies.get_dict())
+```  
+2. 使用会话对象session，实现登录：  
+```python
+import requests
+
+headers = {
+    'user-agent':"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36",
+    'referer': 'https://www.zhihu.com/'
+}
+data = {
+    "phone_num": '15521301448',
+    "password": 'lin123456'
+}
+login_url='https://www.zhihu.com/signin?next=%2F'
+session = requests.session()
+session.get(login_url,data=data,headers=headers)
+response = session.get('https://www.zhihu.com/people/xiao-ji-30-70-25',headers=headers)
+with open('wanzhihu.html','w',encoding='utf-8') as fp:
+    fp.write(response.text)
+```  
+- **处理不信任的ssl证书**  
+```python
+resp = requests.get('http://www.12306.cn/mormhweb/',**verify=False**)
+print(resp.content.decode('utf-8'))
 ```
